@@ -72,8 +72,8 @@ export default function Signup() {
     Alert.alert("Registration Failed", error.message || "An error occurred");
   }
 };
-console.log("User from store:", user);
-console.log("Token from store:", token);
+/* console.log("User from store:", user);
+console.log("Token from store:", token); */
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <KeyboardAvoidingView
