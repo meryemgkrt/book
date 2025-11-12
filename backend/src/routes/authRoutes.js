@@ -1,13 +1,18 @@
 import express from "express";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs"; // Şifre karşılaştırması için gerekli
 
 const router = express.Router();
+
 const generateToken = (userId) => {
-    return jwt.sign(
-        {userId}, process.env.JWT_SECRET, {expiresIn:"10d"}
-    )
-}
+  return jwt.sign(
+    { userId }, 
+    process.env.JWT_SECRET, 
+    { expiresIn: "10d" }
+  );
+};
+
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -59,11 +64,49 @@ router.post("/register", async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Sunucu hatası" });
   }
-  // res.send("register"); ← BU SATIRI SİLİN TAMAMEN!
 });
 
+// ✅ LOGIN ROUTE - DÜZELTME
 router.post("/login", async (req, res) => {
-  res.send("login");
+  try {
+    const { email, password } = req.body;
+
+    // Validasyon
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email ve şifre gerekli" });
+    }
+
+    // Kullanıcıyı bul
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "Email veya şifre hatalı" });
+    }
+
+    // Şifreyi kontrol et
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Email veya şifre hatalı" });
+    }
+
+    // Token oluştur
+    const token = generateToken(user._id);
+
+    // Başarılı response
+    res.status(200).json({
+      message: "Giriş başarılı",
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        profileImage: user.profileImage,
+      },
+    });
+
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
 });
 
 export default router;

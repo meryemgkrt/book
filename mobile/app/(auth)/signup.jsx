@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import styles from "../../assets/styles/login.styles";
 import { useState, useRef, useEffect } from "react";
-import { Image } from "react-native";
 import COLORS from "../../constants/Colors";
 import { Link, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -29,13 +28,10 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { user, isLoading, register, token } = useAuthStore();
+  const { isLoading, register } = useAuthStore();
 
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
-
-  const router = useRouter();
-  // const { isLoading, register } = useAuthStore(); // ✅ Store'u kullanıyorsan aç
 
   const rotation = useSharedValue(0);
 
@@ -57,23 +53,44 @@ export default function Signup() {
     };
   });
 
+  // Email validasyonu
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleSignup = async () => {
-  if (!username || !email || !password) {
-    Alert.alert("Error", "Please fill all fields");
-    return;
-  }
-  
-  try {
-    const result = await register(username, email, password);
-    if (result.success) {
-      router.replace("/");
+    // Validasyonlar
+    if (!username || !email || !password) {
+      Alert.alert("Error", "Please fill all fields");
+      return;
     }
-  } catch (error) {
-    Alert.alert("Registration Failed", error.message || "An error occurred");
-  }
-};
-/* console.log("User from store:", user);
-console.log("Token from store:", token); */
+
+    if (username.length < 3) {
+      Alert.alert("Error", "Username must be at least 3 characters");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      Alert.alert("Error", "Please enter a valid email address");
+      return;
+    }
+
+    if (password.length < 6) {
+      Alert.alert("Error", "Password must be at least 6 characters");
+      return;
+    }
+    
+    try {
+      const result = await register(username, email, password);
+      if (result.success) {
+        // _layout.jsx otomatik olarak /(tabs) sayfasına yönlendirecek
+        Alert.alert("Success", "Account created successfully!");
+      }
+    } catch (error) {
+      Alert.alert("Registration Failed", error.message || "An error occurred");
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <KeyboardAvoidingView
