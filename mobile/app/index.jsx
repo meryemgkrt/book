@@ -14,7 +14,7 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Edit app.{user?.username}</Text>
-      <Text style={styles.title}>Token: {token}</Text>
+      
       
       {/* DÜZELTME: () => logout() */}
       <TouchableOpacity onPress={() => logout()}>
