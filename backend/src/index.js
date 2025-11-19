@@ -11,8 +11,8 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 job.start();
-app.use(express.json()); // JSON verileri için
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' })); 
+app.use(express.urlencoded({ limit: '50mb', extended: true })); 
 
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);

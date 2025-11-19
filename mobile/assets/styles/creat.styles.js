@@ -137,6 +137,10 @@ const styles = StyleSheet.create({
   buttonIcon: {
     marginRight: 8,
   },
+  imagePickerPlaceholder: {
+  alignItems: 'center',
+  justifyContent: 'center',
+},
 });
 
 export default styles;

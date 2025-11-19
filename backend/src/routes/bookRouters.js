@@ -1,22 +1,20 @@
 import express from "express";
 import Book from "../models/Book.js";
 import cloudinary from "../lib/cloudinary.js";
-import protectRoute from "../models/auth.middlewar.js.js";
+import protectRoute from "../middleware/auth.middlewar.js";
 const router = express.Router();
 
-// Kitap ekleme
+
+
 router.post("/", protectRoute, async (req, res) => {
   try {
-    const { title, author, caption, image, rating, user } = req.body;
+    const { title, author, caption, image, rating } = req.body; // ✅ user'ı body'den kaldır
 
-    if (!image || !title || !author || !caption || !rating || !user) {
-      return res
-        .status(400)
-        .json({ message: "Lütfen tüm zorunlu alanları doldurun" });
+    if (!image || !title || !author || !caption || !rating) { // ✅ user kontrolünü kaldır
+      return res.status(400).json({ message: "Lütfen tüm zorunlu alanları doldurun" });
     }
 
     // Cloudinary'e resim yükleme
-
     const uploadRes = await cloudinary.uploader.upload(image);
     const imageUrl = uploadRes.secure_url;
 
@@ -26,7 +24,7 @@ router.post("/", protectRoute, async (req, res) => {
       caption,
       image: imageUrl,
       rating,
-      user: req.user._id,
+      user: req.user._id, // ✅ user protectRoute middleware'inden gelir
     });
 
     await newBook.save();
