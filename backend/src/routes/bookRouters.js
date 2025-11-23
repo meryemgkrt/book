@@ -5,7 +5,7 @@ import protectRoute from "../middleware/auth.middlewar.js";
 
 const router = express.Router();
 
-// Kitap ekleme
+// Kitap ekleme - PROTECTED
 router.post("/", protectRoute, async (req, res) => {
   try {
     const { title, author, caption, image, rating } = req.body;
@@ -35,8 +35,8 @@ router.post("/", protectRoute, async (req, res) => {
   }
 });
 
-// Tüm kitapları getirme (Ana sayfa için)
-router.get("/", protectRoute, async (req, res) => {
+// Tüm kitapları getirme - PUBLIC ✅ protectRoute kaldırıldı
+router.get("/", async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 3;
@@ -64,7 +64,7 @@ router.get("/", protectRoute, async (req, res) => {
   }
 });
 
-// Belirli bir kullanıcının kitaplarını getirme (Profil için)
+// Belirli bir kullanıcının kitaplarını getirme - PROTECTED
 router.get("/user/:userId", protectRoute, async (req, res) => {
   try {
     const { userId } = req.params;
@@ -93,7 +93,7 @@ router.get("/user/:userId", protectRoute, async (req, res) => {
   }
 });
 
-// Kitap silme
+// Kitap silme - PROTECTED
 router.delete("/:id", protectRoute, async (req, res) => {
   try {
     const { id } = req.params;
