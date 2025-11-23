@@ -5,11 +5,21 @@
 ## 📱 Screenshots
 
 <div align="center">
-  <img src="./screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.02.14.png" alt="Login" width="200"/>
-  <img src="./screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.03.28.png" alt="Home" width="200"/>
-  <img src="./screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.03.36.png" alt="Profile" width="200"/>
-  <img src="./screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.03.39.png" alt="Create" width="200"/>
+  <img src="./mobile/screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.02.14.png" alt="Login" width="200"/>
+  <img src="./mobile/screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.03.28.png" alt="Home" width="200"/>
+  <img src="./mobile/screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.03.36.png" alt="Profile" width="200"/>
+  <img src="./mobile/screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.03.39.png" alt="Create" width="200"/>
 </div>
+```
+
+Yapı şu şekilde:
+```
+bookworm/
+├── README.md                    (burada)
+├── mobile/
+│   └── screenshots/             (burada)
+│       └── Öğelerle Yeni Klasör/
+└── backend/
 
 ### 🎯 Key Features Showcase
 
