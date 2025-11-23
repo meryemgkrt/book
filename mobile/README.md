@@ -1,50 +1,125 @@
-# Welcome to your Expo app 👋
+# 📚 BookWorm - Book Sharing Platform
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> A full-stack mobile application for discovering and sharing book recommendations
 
-## Get started
+## 📱 Screenshots
 
-1. Install dependencies
+<div align="center">
+  <img src="./screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.02.14.png" alt="Login" width="200"/>
+  <img src="./screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.03.28.png" alt="Home" width="200"/>
+  <img src="./screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.03.36.png" alt="Profile" width="200"/>
+  <img src="./screenshots/Öğelerle Yeni Klasör/Simulator Screenshot - iPhone 15 Pro - 2025-11-24 at 02.03.39.png" alt="Create" width="200"/>
+</div>
 
-   ```bash
-   npm install
-   ```
+### 🎯 Key Features Showcase
 
-2. Start the app
+| 🔐 Authentication | 📖 Browse Books | 👤 User Profile | ➕ Add Books |
+|:-----------------:|:---------------:|:---------------:|:------------:|
+| ![Login](./screenshots/login.png) | ![Home](./screenshots/home.png) | ![Profile](./screenshots/profile.png) | ![Create](./screenshots/create.png) |
+| Secure login & registration | Discover book recommendations | Manage your collection | Share your favorites |
 
-   ```bash
-   npx expo start
-   ```
+## ✨ Features
 
-In the output, you'll find options to open the app in a
+- 🔐 **JWT Authentication** - Secure user login and registration
+- 📚 **Book Management** - Create, read, update, delete books
+- 🖼️ **Image Upload** - Cloudinary integration for book covers
+- 👤 **User Profiles** - Personalized book collections
+- 🔄 **Real-time Updates** - Pull-to-refresh & pagination
+- 🎨 **Modern UI** - Clean and intuitive design
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🛠️ Tech Stack
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Frontend
+- **React Native** (Expo)
+- **Zustand** - State management
+- **Expo Router** - Navigation
+- **AsyncStorage** - Local persistence
 
-## Get a fresh project
+### Backend
+- **Node.js** & **Express.js**
+- **MongoDB** with Mongoose
+- **JWT** - Authentication
+- **Cloudinary** - Image storage
+- **bcrypt** - Password hashing
 
-When you're ready, run:
+## 🚀 Getting Started
 
-```bash
-npm run reset-project
-```
+### Prerequisites
+- Node.js (v16+)
+- npm or yarn
+- Expo CLI
+- MongoDB Atlas account
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Backend Setup
+\`\`\`bash
+cd backend
+npm install
+cp .env.example .env  # Configure your environment variables
+npm start
+\`\`\`
 
-## Learn more
+### Mobile Setup
+\`\`\`bash
+cd mobile
+npm install
+npx expo start
+\`\`\`
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🌐 Live Demo
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+**Backend API:** [https://book-1-o7rf.onrender.com](https://book-1-o7rf.onrender.com)
 
-## Join the community
+**Test the API:**
+- GET `/api/books` - Fetch all books
+- POST `/api/auth/login` - User login
+- POST `/api/auth/register` - User registration
 
-Join our community of developers creating universal apps.
+## 📦 Project Structure
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+\`\`\`
+book/
+├── backend/           # Node.js API
+│   ├── models/       # MongoDB schemas
+│   ├── routes/       # Express routes
+│   ├── middleware/   # Auth & validation
+│   └── lib/          # Utilities
+├── mobile/           # React Native app
+│   ├── app/          # Screens (Expo Router)
+│   ├── components/   # Reusable components
+│   ├── store/        # Zustand state
+│   └── constants/    # Config & styles
+└── screenshots/      # App screenshots
+\`\`\`
+
+## 🎓 What I Learned
+
+- Building production-ready mobile applications
+- Implementing secure authentication flows
+- Managing cloud infrastructure (MongoDB Atlas, Cloudinary, Render)
+- Optimizing API performance with pagination
+- Modern React patterns and state management
+
+## 🔮 Future Enhancements
+
+- [ ] Like & comment system
+- [ ] Book search & filters
+- [ ] Follow/unfollow users
+- [ ] Push notifications
+- [ ] Dark mode
+- [ ] Reading lists
+- [ ] Social sharing
+
+## 👨‍💻 Author
+
+**Meryem Kurtulus**
+
+- GitHub: [@meryemgkrt](https://github.com/meryemgkrt)
+- LinkedIn: [your-linkedin-profile]
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+⭐ Star this repo if you find it helpful!
