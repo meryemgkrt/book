@@ -41,7 +41,7 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ message: "Kullanıcı adı zaten kayıtlı" });
     }
 
-    const profileImage = `https://api.dicebear.com/9.x/avataaars/svg?seed=${username}`;
+    const profileImage = `https://source.boringavatars.com/beam/200/${username}?colors=667eea,764ba2,f093fb,4facfe`;
 
     const newUser = new User({ username, email, password, profileImage });
 
@@ -57,6 +57,7 @@ router.post("/register", async (req, res) => {
         username: newUser.username,
         email: newUser.email,
         profileImage: newUser.profileImage,
+        createdAt: newUser.createdAt,
       },
     });
 

@@ -5,13 +5,13 @@ import {
   TouchableOpacity, 
   KeyboardAvoidingView, 
   Platform,
-  Alert // EKLENDI
+  Alert 
 } from "react-native";
 import styles from "../../assets/styles/login.styles";
 import { useState } from "react";
 import { Image } from "react-native";
 import COLORS from "../../constants/Colors";
-import { Link, useRouter } from "expo-router"; // useRouter eklendi
+import { Link, useRouter } from "expo-router"; 
 import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "../../store/authStore.js";
 
@@ -19,11 +19,11 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { isLoading, login, error } = useAuthStore(); // error eklendi
-  const router = useRouter(); // eklendi
+  const { isLoading, login, error,isCheckingAuth } = useAuthStore(); 
+  const router = useRouter(); 
 
   const handleLogin = async () => {
-    // Validasyon
+    
     if (!email || !password) {
       Alert.alert("Error", "Please fill in all fields");
       return;
@@ -36,6 +36,7 @@ export default function Login() {
         // Login başarılı - router otomatik yönlendirecek (_layout.jsx'den)
         console.log("Login successful");
       }
+      if (isCheckingAuth) return null; // Henüz kimlik doğrulama kontrolü tamamlanmadı
     } catch (error) {
       // Error store'da set edildi, kullanıcıya göster
       Alert.alert("Login Failed", error.message || "Invalid email or password");

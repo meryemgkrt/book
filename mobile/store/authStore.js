@@ -1,12 +1,13 @@
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {API_URL} from "../constants/api.js";
+import { API_URL } from "../constants/api.js";
 
 export const useAuthStore = create((set, get) => ({
   user: null,
   token: null,
   isLoading: false,
   error: null,
+  isCheckingAuth: true,
 
   register: async (username, email, password) => {
     set({ isLoading: true, error: null });
@@ -20,6 +21,12 @@ export const useAuthStore = create((set, get) => ({
       });
 
       const data = await res.json();
+
+      console.log("=== REGISTER RESPONSE ===");
+      console.log("Full data:", data);
+      console.log("User object:", data.user);
+      console.log("User ID:", data.user?._id);
+      console.log("========================");
       
       if (!res.ok) {
         set({ isLoading: false, error: data.message || "Registration failed" });
@@ -51,6 +58,12 @@ export const useAuthStore = create((set, get) => ({
 
       const data = await res.json();
 
+      console.log("=== LOGIN RESPONSE ===");
+      console.log("Full data:", data);
+      console.log("User object:", data.user);
+      console.log("User ID:", data.user?._id);
+      console.log("=====================");
+
       if (!res.ok) {
         set({ isLoading: false, error: data.message || "Login failed" });
         throw new Error(data.message || "Login failed");
@@ -74,10 +87,16 @@ export const useAuthStore = create((set, get) => ({
       const userData = await AsyncStorage.getItem("user");
       const user = userData ? JSON.parse(userData) : null;
 
+      console.log("=== CHECK AUTH ===");
+      console.log("Token:", token ? "exists" : "missing");
+      console.log("User data:", user);
+      console.log("User ID:", user?._id);
+      console.log("==================");
+
       set({ user, token });
     } catch (error) {
       console.error("Error checking auth:", error);
-      set({ user: null, token: null }); // Error durumunda logout
+      set({ user: null, token: null });
     }
   },
 
@@ -88,6 +107,8 @@ export const useAuthStore = create((set, get) => ({
       set({ user: null, token: null, error: null });
     } catch (error) {
       console.error("Logout error:", error);
+    }finally{
+      set({ isCheckingAuth: false });
     }
   },
 }));

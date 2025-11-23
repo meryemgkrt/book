@@ -2,15 +2,15 @@ import express from "express";
 import Book from "../models/Book.js";
 import cloudinary from "../lib/cloudinary.js";
 import protectRoute from "../middleware/auth.middlewar.js";
+
 const router = express.Router();
 
-
-
+// Kitap ekleme
 router.post("/", protectRoute, async (req, res) => {
   try {
-    const { title, author, caption, image, rating } = req.body; // ✅ user'ı body'den kaldır
+    const { title, author, caption, image, rating } = req.body;
 
-    if (!image || !title || !author || !caption || !rating) { // ✅ user kontrolünü kaldır
+    if (!image || !title || !author || !caption || !rating) {
       return res.status(400).json({ message: "Lütfen tüm zorunlu alanları doldurun" });
     }
 
@@ -24,7 +24,7 @@ router.post("/", protectRoute, async (req, res) => {
       caption,
       image: imageUrl,
       rating,
-      user: req.user._id, // ✅ user protectRoute middleware'inden gelir
+      user: req.user._id,
     });
 
     await newBook.save();
@@ -34,11 +34,12 @@ router.post("/", protectRoute, async (req, res) => {
     res.status(500).json({ message: "Sunucu hatası" });
   }
 });
-// Tüm kitapları getirme
+
+// Tüm kitapları getirme (Ana sayfa için)
 router.get("/", protectRoute, async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5;
+    const limit = parseInt(req.query.limit) || 3;
     const skip = (page - 1) * limit;
     
     const books = await Book.find()
@@ -63,7 +64,36 @@ router.get("/", protectRoute, async (req, res) => {
   }
 });
 
-// Kitsp silme
+// Belirli bir kullanıcının kitaplarını getirme (Profil için)
+router.get("/user/:userId", protectRoute, async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 3;
+    const skip = (page - 1) * limit;
+
+    const books = await Book.find({ user: userId })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate("user", "username profileImage");
+
+    const totalBooks = await Book.countDocuments({ user: userId });
+    const totalPages = Math.ceil(totalBooks / limit);
+
+    res.json({
+      books,
+      totalBooks,
+      currentPage: page,
+      totalPages,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+});
+
+// Kitap silme
 router.delete("/:id", protectRoute, async (req, res) => {
   try {
     const { id } = req.params;
@@ -78,24 +108,18 @@ router.delete("/:id", protectRoute, async (req, res) => {
       return res.status(403).json({ message: "Bu kitabı silme yetkiniz yok" });
     }
 
-    await Book.findByIdAndDelete(id);  // ✅ Doğru metod
-
-    // veya: await book.deleteOne();
-
+    // Cloudinary'den resmi sil
     if (book.image && book.image.includes("cloudinary")) {
-
-        try {
-            const publicId = book.image.split("/").pop().split(".")[0];
-            await cloudinary.uploader.destroy(publicId);
-            
-        } catch (error) {
-            console.error("Cloudinary resim silme hatası:", error);
-            // Hata durumunda isteği iptal et
-            return res.status(500).json({ message: "Resim silme hatası" });
-            
-        }
-
+      try {
+        const publicId = book.image.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(publicId);
+      } catch (error) {
+        console.error("Cloudinary resim silme hatası:", error);
+        return res.status(500).json({ message: "Resim silme hatası" });
+      }
     }
+
+    await Book.findByIdAndDelete(id);
     
     res.json({ message: "Kitap başarıyla silindi" });
     

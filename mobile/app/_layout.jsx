@@ -4,6 +4,10 @@ import SafeScreen from "../components/SafeScreen";
 import { StatusBar } from "expo-status-bar";
 import { useAuthStore } from "../store/authStore";
 import { useEffect, useState } from "react";
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen'; // ✅ Düzgün import
+
+SplashScreen.preventAutoHideAsync(); // ✅ Geri eklendi
 
 export default function RootLayout() {
   const router = useRouter();
@@ -12,16 +16,26 @@ export default function RootLayout() {
  
   const { checkAuth, user, token } = useAuthStore();
 
-  // İlk auth kontrolü
+  // ✅ useFonts doğru kullanımı
+  const [loaded, error] = useFonts({
+    "JetBrainsMono-Regular": require("../assets/fonts/ttf/JetBrainsMono-Regular.ttf"),
+    "JetBrainsMono-Bold": require("../assets/fonts/ttf/JetBrainsMono-Bold.ttf"),
+  });
+
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
   useEffect(() => {
     const initAuth = async () => {
       await checkAuth();
       setIsReady(true);
     };
     initAuth();
-  }, [checkAuth]); // checkAuth eklendi
+  }, [checkAuth]);
 
-  // Navigation logic
   useEffect(() => {
     if (!isReady) return;
 
@@ -33,7 +47,12 @@ export default function RootLayout() {
     } else if (isLoggedIn && inAuthGroup) {
       router.replace("/(tabs)");
     }
-  }, [isReady, user, token, segments, router]); // router eklendi
+  }, [isReady, user, token, segments, router]);
+
+  // ✅ loaded kullan
+  if (!loaded && !error) {
+    return null;
+  }
 
   return (
     <SafeAreaProvider>

@@ -1,38 +1,116 @@
 // styles/home.styles.js
 import { StyleSheet } from "react-native";
-import COLORS from "../../constants/Colors";
+import COLORS from "../../constants/Colors"; // dosya ismi büyük/küçük harfe dikkat et
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
   },
+
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: COLORS.background,
   },
-  listContainer: {
+
+  listContent: {
     padding: 16,
     paddingBottom: 80,
   },
+
+  /* Header */
   header: {
-    marginBottom: 20,
+    backgroundColor: COLORS.headerBackground ?? "#fff",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E5E5E5",
+    marginBottom: 12,
+  },
+  headerContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
   },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  logoContainer: {
+    width: 44,
+    height: 44,
+    backgroundColor: "#F0F8FF",
+    borderRadius: 22,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 12,
+  },
+  wormEmoji: {
+    position: "absolute",
+    fontSize: 16,
+    bottom: -4,
+    right: -4,
+  },
   headerTitle: {
-    fontSize: 24,
-    fontFamily: "JetBrainsMono-Medium",
-    letterSpacing: 0.5,
-    color: COLORS.primary,
-    marginBottom: 8,
+    fontSize: 20,
+    fontWeight: "700",
+    color: COLORS.textPrimary ?? "#333",
   },
   headerSubtitle: {
-    fontSize: 14,
-    color: COLORS.textSecondary,
-    textAlign: "center",
+    fontSize: 12,
+    color: COLORS.textSecondary ?? "#666",
+    marginTop: 2,
   },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  /* Search */
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F5F5F5",
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    marginTop: 12,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: "#333",
+  },
+
+  iconButton: {
+    marginRight: 12,
+  },
+
+  notificationWrapper: {
+    position: "relative",
+    marginRight: 12,
+  },
+  notificationBadge: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    backgroundColor: "#E74C3C",
+    borderRadius: 10,
+    minWidth: 18,
+    height: 18,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 4,
+  },
+  badgeText: {
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "700",
+  },
+
+  /* Book card */
   bookCard: {
     backgroundColor: COLORS.cardBackground,
     borderRadius: 16,
@@ -52,7 +130,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 12,
   },
-  userInfo: {
+  bookInfo: {
     flexDirection: "row",
     alignItems: "center",
   },
@@ -61,12 +139,14 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 18,
     marginRight: 10,
+    backgroundColor: COLORS.border,
   },
   username: {
     fontSize: 15,
     fontWeight: "600",
     color: COLORS.textPrimary,
   },
+
   bookImageContainer: {
     width: "100%",
     height: 200,
@@ -79,6 +159,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+
   bookDetails: {
     padding: 4,
   },
@@ -88,20 +169,30 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
     marginBottom: 6,
   },
+  bookAuthor: {
+    fontSize: 13,
+    color: COLORS.textSecondary,
+    marginBottom: 6,
+  },
+
   ratingContainer: {
     flexDirection: "row",
     marginBottom: 8,
   },
+
   caption: {
     fontSize: 14,
-    color: COLORS.textDark,
+    color: COLORS.textDark ?? "#333",
     marginBottom: 8,
     lineHeight: 20,
   },
+
   date: {
     fontSize: 12,
     color: COLORS.textSecondary,
   },
+
+  /* Empty */
   emptyContainer: {
     alignItems: "center",
     justifyContent: "center",
@@ -120,6 +211,7 @@ const styles = StyleSheet.create({
     color: COLORS.textSecondary,
     textAlign: "center",
   },
+
   footerLoader: {
     marginVertical: 20,
   },
